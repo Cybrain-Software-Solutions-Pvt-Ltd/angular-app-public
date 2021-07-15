@@ -1,0 +1,62 @@
+# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: CI - Devlopement Branch
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+        #
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }} Version
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - run: npm i
+    - run: echo Hello Rajendra, NPM Installed Successfully!
+    - run: npm install -g @angular/cli > /dev/null
+    - run: ng build --prod --configuration=production
+    - run: echo Hello Rajendra, Build Success!
+
+    - name: Deploy to Server
+      uses: easingthemes/ssh-deploy@main
+      env:
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_PUBLIC_KEY }}
+          SOURCE: "dist/PrivateAngularApplication/*"
+          REMOTE_HOST: plaians.com
+          REMOTE_USER: Administrator
+          TARGET: C:/inetpub/vhosts/vps.examsbell.in/plaians.com
+          EXCLUDE: "/dist/, /node_modules/"
+    # - name: copy file via ssh password
+    #   uses: appleboy/scp-action@master
+    #   with:
+    #     host: plaians.com
+    #     username: Administrator
+    #     port:  80
+    #     key: ${{ secrets.OPENSSH_PRIVATE_KEY }}
+    #     source: "dist/PrivateAngularApplication/"
+    #     target: "Inetpub/vhosts/vps.examsbell.in/plaians.com"
+    #     strip_components: 3 # this is important
+
+
+
+
+
+
+
