@@ -37,12 +37,11 @@ jobs:
     - name: Deploy to Server
       uses: easingthemes/ssh-deploy@main
       env:
-          SSH_PRIVATE_KEY: ${{ secrets.SERVER_PUBLIC_KEY }}
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_PRIVATE_KEY }}
           SOURCE: "dist/PrivateAngularApplication/*"
           REMOTE_HOST: plaians.com
           REMOTE_USER: Administrator
           TARGET: C:/inetpub/vhosts/vps.examsbell.in/plaians.com
-          EXCLUDE: "/dist/, /node_modules/"
     # - name: copy file via ssh password
     #   uses: appleboy/scp-action@master
     #   with:
