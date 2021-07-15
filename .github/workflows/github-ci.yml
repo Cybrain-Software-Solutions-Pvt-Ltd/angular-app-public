@@ -40,7 +40,7 @@ jobs:
         server: plaians.com
         username: examsbell
         password: Y1_7arr8
-        server-dir: C:/inetpub/vhosts/vps.examsbell.in/plaians.com
+        server-dir: C:/inetpub/vhosts/vps.examsbell.in/plaians.com/
 
 
     # - name: Deploy to Server
