@@ -34,14 +34,23 @@ jobs:
     - run: ng build --prod --configuration=production
     - run: echo Hello Rajendra, Build Success!
 
-    - name: Deploy to Server
-      uses: easingthemes/ssh-deploy@main
-      env:
-          SSH_PRIVATE_KEY: ${{ secrets.SERVER_PRIVATE_KEY }}
-          SOURCE: "dist/PrivateAngularApplication/*"
-          REMOTE_HOST: plaians.com
-          REMOTE_USER: Administrator
-          TARGET: C:/inetpub/vhosts/vps.examsbell.in/plaians.com
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@4.0.0
+      with:
+        server: plaians.com
+        username: examsbell
+        password: Y1_7arr8
+        server-dir: C:/inetpub/vhosts/vps.examsbell.in/plaians.com
+
+
+    # - name: Deploy to Server
+    #   uses: easingthemes/ssh-deploy@main
+    #   env:
+    #       SSH_PRIVATE_KEY: ${{ secrets.SERVER_PRIVATE_KEY }}
+    #       SOURCE: "dist/PrivateAngularApplication/*"
+    #       REMOTE_HOST: plaians.com
+    #       REMOTE_USER: Administrator
+    #       TARGET: C:/inetpub/vhosts/vps.examsbell.in/plaians.com
     # - name: copy file via ssh password
     #   uses: appleboy/scp-action@master
     #   with:
